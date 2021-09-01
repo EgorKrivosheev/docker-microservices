@@ -1,0 +1,5 @@
+databaseChangeLog:
+  - include:
+      file: database/create-batch-table.yaml
+  - include:
+      file: database/create-item-table.yaml

@@ -1,0 +1,72 @@
+<configuration>
+
+    <property name="PATTERN" value="%d{yyyy-MM-dd'T'HH:mm:ss.SSS} %p --- [%t] %-40.40logger{39} : %m%n" />
+    <property name="PATH" value="${LOG_PATH:-/app/logs}" />
+    <property name="MAX_COUNT_FILE" value="${LOG_MAX_COUNT_FILE:-4}" />
+    <property name="MAX_FILE_SIZE" value="${LOG_MAX_FILE_SIZE:-10MB}" />
+
+    <appender name="console" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>${PATTERN}</pattern>
+        </encoder>
+    </appender>
+
+    <appender name="transformation" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${PATH}/transformation.log</file>
+        <encoder>
+            <pattern>${PATTERN}</pattern>
+        </encoder>
+        <rollingPolicy class="ch.qos.logback.core.rolling.FixedWindowRollingPolicy">
+            <fileNamePattern>${PATH}/transformation-%i.log</fileNamePattern>
+            <minIndex>1</minIndex>
+            <maxIndex>${MAX_COUNT_FILE}</maxIndex>
+        </rollingPolicy>
+        <triggeringPolicy class="ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy">
+            <maxFileSize>${MAX_FILE_SIZE}</maxFileSize>
+        </triggeringPolicy>
+    </appender>
+
+    <appender name="controllers" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${PATH}/controllers.log</file>
+        <encoder>
+            <pattern>${PATTERN}</pattern>
+        </encoder>
+        <rollingPolicy class="ch.qos.logback.core.rolling.FixedWindowRollingPolicy">
+            <fileNamePattern>${PATH}/controllers-%i.log</fileNamePattern>
+            <minIndex>1</minIndex>
+            <maxIndex>${MAX_COUNT_FILE}</maxIndex>
+        </rollingPolicy>
+        <triggeringPolicy class="ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy">
+            <maxFileSize>${MAX_FILE_SIZE}</maxFileSize>
+        </triggeringPolicy>
+    </appender>
+
+    <appender name="services" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${PATH}/services.log</file>
+        <encoder>
+            <pattern>${PATTERN}</pattern>
+        </encoder>
+        <rollingPolicy class="ch.qos.logback.core.rolling.FixedWindowRollingPolicy">
+            <fileNamePattern>${PATH}/services-%i.log</fileNamePattern>
+            <minIndex>1</minIndex>
+            <maxIndex>${MAX_COUNT_FILE}</maxIndex>
+        </rollingPolicy>
+        <triggeringPolicy class="ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy">
+            <maxFileSize>${MAX_FILE_SIZE}</maxFileSize>
+        </triggeringPolicy>
+    </appender>
+
+    <logger name="by.grodno.krivosheev.transformation.services" level="DEBUG">
+        <appender-ref ref="services" />
+    </logger>
+
+    <logger name="by.grodno.krivosheev.transformation.controllers" level="WARN">
+        <appender-ref ref="controllers" />
+    </logger>
+
+    <root level="INFO">
+        <appender-ref ref="transformation" />
+        <appender-ref ref="console" />
+    </root>
+
+</configuration>

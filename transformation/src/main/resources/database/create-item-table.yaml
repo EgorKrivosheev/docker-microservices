@@ -1,0 +1,32 @@
+databaseChangeLog:
+  - changeSet:
+      id: create-item-table
+      author: egor.krivosheev
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            tableExists:
+              tableName: ITEM
+      changes:
+        - createTable:
+            columns:
+              - column:
+                  autoIncrement: true
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: item_pkey
+                  name: id_item
+                  type: BIGINT
+              - column:
+                  name: subject
+                  type: VARCHAR(255)
+              - column:
+                  name: body
+                  type: VARCHAR(255)
+              - column:
+                  constraints:
+                    nullable: false
+                  name: id_batch
+                  type: BIGINT
+            tableName: ITEM

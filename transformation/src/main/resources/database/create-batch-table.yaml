@@ -1,0 +1,29 @@
+databaseChangeLog:
+  - changeSet:
+      id: create-batch-table
+      author: egor.krivosheev
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            tableExists:
+              tableName: BATCH
+      changes:
+        - createTable:
+            columns:
+              - column:
+                  autoIncrement: true
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: batch_pkey
+                  name: id_batch
+                  type: BIGINT
+              - column:
+                  constraints:
+                    nullable: false
+                  name: size
+                  type: BIGINT
+              - column:
+                  name: upload_date
+                  type: VARCHAR(255)
+            tableName: BATCH
