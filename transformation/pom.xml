@@ -21,8 +21,9 @@
         <java.version>11</java.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-        <open-api.version>1.5.9</open-api.version>
         <spring-boot-admin.version>2.5.0</spring-boot-admin.version>
+        <eureka-server.version>3.0.3</eureka-server.version>
+        <open-api.version>1.5.9</open-api.version>
     </properties>
 
     <dependencies>
@@ -50,6 +51,11 @@
             <groupId>de.codecentric</groupId>
             <artifactId>spring-boot-admin-starter-client</artifactId>
             <version>${spring-boot-admin.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
+            <version>${eureka-server.version}</version>
         </dependency>
 
         <dependency>

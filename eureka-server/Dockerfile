@@ -8,4 +8,4 @@ COPY src ./src
 
 RUN ./mvnw install
 
-ENTRYPOINT ["java", "-jar", "./target/transformation-1.0.0.jar"]
+ENTRYPOINT ["java", "-jar", "./target/eureka-server-1.0.0.jar"]
