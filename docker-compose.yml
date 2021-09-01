@@ -28,7 +28,7 @@ services:
   admin-server:
     container_name: admin-server
     build:
-      context: ./admin-server
+      context: admin-server
     ports:
       - "8000:8000"
     environment:
@@ -37,7 +37,7 @@ services:
   transformation:
     container_name: transformation
     build:
-      context: ./transformation
+      context: transformation
     depends_on:
       - zookeeper
       - kafka
