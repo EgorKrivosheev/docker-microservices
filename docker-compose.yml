@@ -32,7 +32,7 @@ services:
     ports:
       - "8761:8761"
     environment:
-      server.port: 8761
+      PORT: 8761
 
   admin-server:
     container_name: admin-server
@@ -43,8 +43,8 @@ services:
     ports:
       - "8000:8000"
     environment:
-      server.port: 8000
-      eureka.client.serviceUrl.defaultZone: http://eureka-server:8761/
+      PORT: 8000
+      EUREKA-SERVER: http://eureka-server:8761/eureka
 
   transformation:
     container_name: transformation
@@ -58,8 +58,7 @@ services:
     ports:
       - "8025:8025"
     environment:
-      server.port: 8025
-      spring.kafka.bootstrap-servers: kafka:9092
+      PORT: 8025
+      KAFKA-SERVER: kafka:9092
+      EUREKA-SERVER: http://eureka-server:8761/eureka
       spring.datasource.hikari.maximum-pool-size: 10
-      spring.boot.admin.client.url: http://admin-server:8000/
-      eureka.client.serviceUrl.defaultZone: http://eureka-server:8761/
