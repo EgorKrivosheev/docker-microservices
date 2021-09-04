@@ -1,5 +1,4 @@
-version: '3.7'
-services:
+build:
   zookeeper:
     container_name: zookeeper
     image: confluentinc/cp-zookeeper:latest
@@ -8,7 +7,6 @@ services:
       ZOOKEEPER_TICK_TIME: 2000
     ports:
       - "2181:2181"
-
   kafka:
     container_name: kafka
     image: confluentinc/cp-kafka:latest
@@ -24,7 +22,6 @@ services:
       KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka:9092,PLAINTEXT_HOST://localhost:29092
       KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,PLAINTEXT_HOST:PLAINTEXT
       KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
-
   eureka-server:
     container_name: eureka-server
     build:
@@ -33,7 +30,6 @@ services:
       - "8761:8761"
     environment:
       PORT: 8761
-
   admin-server:
     container_name: admin-server
     build:
@@ -45,7 +41,6 @@ services:
     environment:
       PORT: 8000
       EUREKA-SERVER: http://eureka-server:8761/eureka
-
   transformation:
     container_name: transformation
     build:
@@ -62,3 +57,9 @@ services:
       KAFKA-SERVER: kafka:9092
       EUREKA-SERVER: http://eureka-server:8761/eureka
       spring.datasource.hikari.maximum-pool-size: 10
+run:
+  zookeeper: bundle exec puma -C config/puma.rb
+  kafka: bundle exec puma -C config/puma.rb
+  eureka-server: bundle exec puma -C config/puma.rb
+  admin-server: bundle exec puma -C config/puma.rb
+  transformation: bundle exec puma -C config/puma.rb
