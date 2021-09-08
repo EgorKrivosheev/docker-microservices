@@ -1,4 +1,4 @@
-version: '3.2'
+version: '3.8'
 services:
   zookeeper:
     container_name: zookeeper
@@ -27,8 +27,7 @@ services:
 
   eureka-server:
     container_name: eureka-server
-    build:
-      context: eureka-server
+    image: eureka-server:latest
     ports:
       - "8761:8761"
     environment:
@@ -36,8 +35,7 @@ services:
 
   admin-server:
     container_name: admin-server
-    build:
-      context: admin-server
+    image: admin-server:latest
     depends_on:
       - eureka-server
     ports:
@@ -48,8 +46,7 @@ services:
 
   transformation:
     container_name: transformation
-    build:
-      context: transformation
+    image: transformation:latest
     depends_on:
       - zookeeper
       - kafka

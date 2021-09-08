@@ -22,6 +22,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <eureka-server.version>3.0.3</eureka-server.version>
+        <jib-maven-plugin>3.1.4</jib-maven-plugin>
     </properties>
 
     <dependencies>
@@ -43,6 +44,27 @@
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+            <plugin>
+                <groupId>com.google.cloud.tools</groupId>
+                <artifactId>jib-maven-plugin</artifactId>
+                <version>${jib-maven-plugin}</version>
+                <configuration>
+                    <from>
+                        <image>openjdk:11-slim</image>
+                    </from>
+                    <to>
+                        <image>${project.name}:latest</image>
+                    </to>
+                </configuration>
+                <executions>
+                    <execution>
+                        <phase>compile</phase>
+                        <goals>
+                            <goal>dockerBuild</goal>
+                        </goals>
+                    </execution>
+                </executions>
             </plugin>
         </plugins>
     </build>
