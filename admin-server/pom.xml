@@ -4,27 +4,16 @@
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
-        <groupId>org.springframework.boot</groupId>
-        <artifactId>spring-boot-starter-parent</artifactId>
-        <version>2.5.2</version>
-        <relativePath/>
+        <groupId>by.grodno.krivosheev</groupId>
+        <artifactId>docker-microservices</artifactId>
+        <version>1.0.0</version>
     </parent>
 
-    <groupId>by.grodno.krivosheev</groupId>
 	<artifactId>admin-server</artifactId>
 	<version>1.0.0</version>
 
 	<name>admin-server</name>
 	<description>Admin server project for Spring Boot</description>
-
-    <properties>
-        <java.version>11</java.version>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-        <spring-boot-admin.version>2.5.0</spring-boot-admin.version>
-        <eureka-server.version>3.0.3</eureka-server.version>
-        <jib-maven-plugin>3.1.4</jib-maven-plugin>
-	</properties>
 
     <dependencies>
         <dependency>
@@ -38,53 +27,17 @@
         <dependency>
             <groupId>de.codecentric</groupId>
             <artifactId>spring-boot-admin-starter-server</artifactId>
-            <version>${spring-boot-admin.version}</version>
+            <version>${spring-boot-admin-server.version}</version>
         </dependency>
         <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
-            <version>${eureka-server.version}</version>
         </dependency>
 
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-test</artifactId>
-            <scope>test</scope>
-        </dependency>
         <dependency>
             <groupId>org.springframework.security</groupId>
             <artifactId>spring-security-test</artifactId>
             <scope>test</scope>
         </dependency>
     </dependencies>
-
-    <build>
-        <plugins>
-            <plugin>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-maven-plugin</artifactId>
-            </plugin>
-            <plugin>
-                <groupId>com.google.cloud.tools</groupId>
-                <artifactId>jib-maven-plugin</artifactId>
-                <version>${jib-maven-plugin}</version>
-                <configuration>
-                    <from>
-                        <image>openjdk:11-slim</image>
-                    </from>
-                    <to>
-                        <image>${project.name}:latest</image>
-                    </to>
-                </configuration>
-                <executions>
-                    <execution>
-                        <phase>compile</phase>
-                        <goals>
-                            <goal>dockerBuild</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
-        </plugins>
-    </build>
 </project>
