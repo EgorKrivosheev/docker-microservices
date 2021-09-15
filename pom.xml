@@ -83,7 +83,7 @@
                     <execution>
                         <phase>compile</phase>
                         <goals>
-                            <goal>dockerBuild</goal>
+                            <goal>build</goal>
                         </goals>
                     </execution>
                 </executions>
