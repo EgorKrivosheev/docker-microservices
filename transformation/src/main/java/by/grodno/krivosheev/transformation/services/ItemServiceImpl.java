@@ -4,6 +4,8 @@ import by.grodno.krivosheev.transformation.entities.ItemEntity;
 
 import by.grodno.krivosheev.transformation.repositories.ItemRepository;
 
+import lombok.RequiredArgsConstructor;
+
 import org.springframework.data.domain.Pageable;
 
 import org.springframework.stereotype.Service;
@@ -11,12 +13,9 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
 public class ItemServiceImpl implements ItemService {
     private final ItemRepository itemRepository;
-
-    public ItemServiceImpl(ItemRepository itemRepository) {
-        this.itemRepository = itemRepository;
-    }
 
     @Override
     public void saveAll(List<ItemEntity> list) {

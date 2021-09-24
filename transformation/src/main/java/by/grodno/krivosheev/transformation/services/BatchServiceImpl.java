@@ -4,6 +4,8 @@ import by.grodno.krivosheev.transformation.entities.BatchEntity;
 
 import by.grodno.krivosheev.transformation.repositories.BatchRepository;
 
+import lombok.RequiredArgsConstructor;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
@@ -19,14 +21,10 @@ import java.nio.file.Files;
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
 public class BatchServiceImpl implements BatchService {
     private final BatchRepository batchRepository;
     private final FileService fileService;
-
-    public BatchServiceImpl(BatchRepository batchRepository, FileService fileService) {
-        this.batchRepository = batchRepository;
-        this.fileService = fileService;
-    }
 
     @Override
     public File save(MultipartFile file) throws IOException {

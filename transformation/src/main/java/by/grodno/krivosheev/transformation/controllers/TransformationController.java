@@ -3,8 +3,9 @@ package by.grodno.krivosheev.transformation.controllers;
 import by.grodno.krivosheev.transformation.dto.BatchInfoDTO;
 import by.grodno.krivosheev.transformation.dto.UnifiedFormatDTO;
 
-import by.grodno.krivosheev.transformation.entities.BatchEntity;
 import by.grodno.krivosheev.transformation.entities.ItemEntity;
+
+import by.grodno.krivosheev.transformation.mappers.BatchMapper;
 
 import by.grodno.krivosheev.transformation.response.AbstractResponse;
 import by.grodno.krivosheev.transformation.response.ListBatchResponse;
@@ -16,6 +17,8 @@ import by.grodno.krivosheev.transformation.services.TransformationService;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+
+import lombok.RequiredArgsConstructor;
 
 import org.springdoc.api.annotations.ParameterObject;
 
@@ -34,22 +37,17 @@ import java.io.File;
 import java.io.IOException;
 
 import java.util.Collections;
-import java.util.LinkedList;
 import java.util.List;
 
 @Tag(name = "Transformation", description = "The rest service which consumes the data and just transforms it to a unified format")
 @RestController
+@RequiredArgsConstructor
 @RequestMapping(value = "/batches")
 public class TransformationController {
     private final BatchService batchService;
     private final ItemService itemService;
     private final TransformationService transformationService;
-
-    public TransformationController(BatchService batchService, ItemService itemService, TransformationService transformationService) {
-        this.batchService = batchService;
-        this.itemService = itemService;
-        this.transformationService = transformationService;
-    }
+    private final BatchMapper batchMapper;
 
     @Operation(summary = "Ingest endpoint")
     @PostMapping(produces = "application/octet-stream")
@@ -61,7 +59,7 @@ public class TransformationController {
 
         File uploadFile = batchService.save(file);
         long id = Long.parseLong(uploadFile.getName().substring(0, uploadFile.getName().length() - 4));
-        List<BatchInfoDTO> list = Collections.singletonList(new BatchInfoDTO(batchService.getBatch(id)));
+        List<BatchInfoDTO> list = Collections.singletonList(batchMapper.batchEntityToBatchInfoDTO(batchService.getBatch(id)));
         return responseList(new ListBatchResponse(HttpStatus.OK, list), new HttpHeaders());
     }
 
@@ -69,13 +67,7 @@ public class TransformationController {
     @GetMapping(produces = "application/json")
     public ResponseEntity<ListBatchResponse> getBatches(@ParameterObject @PageableDefault(size = 25, sort = "uploadDate",
             direction = Sort.Direction.DESC) Pageable pageable) {
-        List<BatchInfoDTO> list = new LinkedList<>();
-
-        for (BatchEntity entity : batchService.getAll(pageable)) {
-            list.add(new BatchInfoDTO(entity));
-        }
-
-        return responseList(new ListBatchResponse(HttpStatus.OK, list));
+        return responseList(new ListBatchResponse(HttpStatus.OK, batchMapper.listBatchEntityToListBatchInfoDTO(batchService.getAll(pageable))));
     }
 
     @Operation(summary = "Batch content with pagination (in the order from original file)")
