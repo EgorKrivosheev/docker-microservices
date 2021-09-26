@@ -1,11 +1,9 @@
 package by.grodno.krivosheev.transformation.controllers;
 
 import by.grodno.krivosheev.transformation.dto.BatchInfoDTO;
-import by.grodno.krivosheev.transformation.dto.UnifiedFormatDTO;
-
-import by.grodno.krivosheev.transformation.entities.ItemEntity;
 
 import by.grodno.krivosheev.transformation.mappers.BatchMapper;
+import by.grodno.krivosheev.transformation.mappers.ItemMapper;
 
 import by.grodno.krivosheev.transformation.response.AbstractResponse;
 import by.grodno.krivosheev.transformation.response.ListBatchResponse;
@@ -13,7 +11,6 @@ import by.grodno.krivosheev.transformation.response.ListUnifiedResponse;
 
 import by.grodno.krivosheev.transformation.services.BatchService;
 import by.grodno.krivosheev.transformation.services.ItemService;
-import by.grodno.krivosheev.transformation.services.TransformationService;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -46,8 +43,8 @@ import java.util.List;
 public class TransformationController {
     private final BatchService batchService;
     private final ItemService itemService;
-    private final TransformationService transformationService;
     private final BatchMapper batchMapper;
+    private final ItemMapper itemMapper;
 
     @Operation(summary = "Ingest endpoint")
     @PostMapping(produces = "application/octet-stream")
@@ -74,9 +71,7 @@ public class TransformationController {
     @GetMapping(value = "/{batchId}/items", produces = "application/json")
     public ResponseEntity<ListUnifiedResponse> getItemsBatch(@PathVariable Long batchId,
                                                              @ParameterObject @PageableDefault(size = 25) Pageable pageable) {
-        List<ItemEntity> itemList = itemService.findAllByIdBatch(batchId, pageable);
-        List<UnifiedFormatDTO> unifiedList = transformationService.toUnifiedFormat(itemList);
-        return responseList(new ListUnifiedResponse(HttpStatus.OK, unifiedList));
+        return responseList(new ListUnifiedResponse(HttpStatus.OK, itemMapper.listItemEntityToListUnifiedFormatDTO(itemService.findAllByIdBatch(batchId, pageable))));
     }
 
     private <T> ResponseEntity<T> responseList(T response) {

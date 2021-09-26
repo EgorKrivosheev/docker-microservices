@@ -15,7 +15,7 @@ import java.util.List;
 public interface BatchMapper {
 
     /**
-     * This mapper is gets {@code id}, {@code size}, {@code uploadDate} of the {@link BatchEntity}.
+     * This mapper gets {@code id}, {@code size}, {@code uploadDate} of the {@link BatchEntity}.
      * @param batchEntity it is info about Batch in database.
      * @return information about upload batch {@link BatchInfoDTO}.
      */

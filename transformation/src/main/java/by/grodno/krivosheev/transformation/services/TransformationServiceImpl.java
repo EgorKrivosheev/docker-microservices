@@ -2,13 +2,11 @@ package by.grodno.krivosheev.transformation.services;
 
 import by.grodno.krivosheev.transformation.entities.ItemEntity;
 
-import by.grodno.krivosheev.transformation.dto.UnifiedFormatDTO;
-
 import by.grodno.krivosheev.transformation.pojo.Item;
 
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 
 import org.springframework.scheduling.annotation.Async;
@@ -28,17 +26,16 @@ import java.io.IOException;
 
 import java.util.ArrayList;
 import java.util.Enumeration;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 
 @Service
 @Slf4j
+@RequiredArgsConstructor
 public class TransformationServiceImpl implements TransformationService {
     @Value("${size-batch-save-database:100}")
     private int size;
-    @Autowired
     private ItemService itemService;
 
     @Override
@@ -86,17 +83,6 @@ public class TransformationServiceImpl implements TransformationService {
         } catch (IOException | XMLStreamException | JAXBException e) {
             e.printStackTrace();
         }
-    }
-
-    @Override
-    public List<UnifiedFormatDTO> toUnifiedFormat(List<ItemEntity> list) {
-        List<UnifiedFormatDTO> unifiedList = new LinkedList<>();
-
-        for (ItemEntity i : list) {
-            unifiedList.add(new UnifiedFormatDTO(i));
-        }
-
-        return unifiedList;
     }
 
     private String getMemory(Runtime runtime) {
