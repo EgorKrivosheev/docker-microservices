@@ -4,9 +4,9 @@ import by.grodno.krivosheev.transformation.entities.ItemEntity;
 
 import by.grodno.krivosheev.transformation.pojo.Item;
 
-import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 
 import org.springframework.scheduling.annotation.Async;
@@ -32,10 +32,10 @@ import java.util.zip.ZipFile;
 
 @Service
 @Slf4j
-@RequiredArgsConstructor
 public class TransformationServiceImpl implements TransformationService {
     @Value("${size-batch-save-database:100}")
     private int size;
+    @Autowired
     private ItemService itemService;
 
     @Override

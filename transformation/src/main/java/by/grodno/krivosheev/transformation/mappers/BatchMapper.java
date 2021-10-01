@@ -4,13 +4,14 @@ import by.grodno.krivosheev.transformation.dto.BatchInfoDTO;
 
 import by.grodno.krivosheev.transformation.entities.BatchEntity;
 
+import org.mapstruct.InjectionStrategy;
 import org.mapstruct.Mapper;
 
 import org.springframework.stereotype.Component;
 
 import java.util.List;
 
-@Mapper(componentModel = "spring")
+@Mapper(componentModel = "spring", injectionStrategy = InjectionStrategy.CONSTRUCTOR)
 @Component
 public interface BatchMapper {
 

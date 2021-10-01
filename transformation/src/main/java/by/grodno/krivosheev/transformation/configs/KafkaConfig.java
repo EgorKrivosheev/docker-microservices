@@ -2,8 +2,7 @@ package by.grodno.krivosheev.transformation.configs;
 
 import by.grodno.krivosheev.transformation.services.TransformationService;
 
-import lombok.RequiredArgsConstructor;
-
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 
 import org.springframework.boot.autoconfigure.AutoConfigureBefore;
@@ -22,11 +21,11 @@ import java.io.IOException;
 
 @EnableKafka
 @Configuration
-@RequiredArgsConstructor
 @AutoConfigureBefore(KafkaAutoConfiguration.class)
 public class KafkaConfig {
     @Value("${spring.datasource.hikari.maximum-pool-size:20}")
     private int poolConnection;
+    @Autowired
     private TransformationService transformationService;
 
     @Bean(name = "listenerTaskExecutor")

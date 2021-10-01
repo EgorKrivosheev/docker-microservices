@@ -101,14 +101,14 @@
                         <image>openjdk:11-slim</image>
                     </from>
                     <to>
-                        <image>registry.heroku.com/docker-microservices/${project.name}:latest</image>
+                        <image>${project.name}:latest</image>
                     </to>
                 </configuration>
                 <executions>
                     <execution>
                         <phase>compile</phase>
                         <goals>
-                            <goal>build</goal>
+                            <goal>dockerBuild</goal>
                         </goals>
                     </execution>
                 </executions>
