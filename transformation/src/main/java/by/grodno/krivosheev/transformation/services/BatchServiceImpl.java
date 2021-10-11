@@ -6,7 +6,6 @@ import by.grodno.krivosheev.transformation.repositories.BatchRepository;
 
 import lombok.RequiredArgsConstructor;
 
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 import org.springframework.stereotype.Service;
@@ -39,8 +38,7 @@ public class BatchServiceImpl implements BatchService {
 
     @Override
     public List<BatchEntity> getAll(Pageable pageable) {
-        Page<BatchEntity> page = batchRepository.findAll(pageable);
-        return page.toList();
+        return batchRepository.findAll(pageable).toList();
     }
 
     @Override

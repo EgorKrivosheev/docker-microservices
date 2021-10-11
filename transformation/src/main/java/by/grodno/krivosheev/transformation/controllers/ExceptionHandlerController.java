@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 import org.springframework.web.multipart.MaxUploadSizeExceededException;
 
 @RestControllerAdvice
@@ -31,7 +32,7 @@ public class ExceptionHandlerController {
      * @param e object catches exception.
      * @return custom {@link ErrorResponse} with code 400 and message about bad request.
      */
-    @ExceptionHandler({IllegalArgumentException.class, MaxUploadSizeExceededException.class, PropertyReferenceException.class})
+    @ExceptionHandler({IllegalArgumentException.class, MaxUploadSizeExceededException.class, PropertyReferenceException.class, MethodArgumentTypeMismatchException.class})
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @RequestMapping(produces = "application/json")
     public ResponseEntity<ErrorResponse> handleBadRequest(Object e) {
