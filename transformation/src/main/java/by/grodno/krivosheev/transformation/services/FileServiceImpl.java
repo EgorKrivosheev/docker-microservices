@@ -24,10 +24,10 @@ public class FileServiceImpl implements FileService {
     @Override
     public File uploadAndSendKafka(MultipartFile file, String name) throws IOException {
         byte[] bytes = file.getBytes();
-        FileOutputStream stream = new FileOutputStream(name);
-        stream.write(bytes);
-        stream.flush();
-        stream.close();
+        try(FileOutputStream stream = new FileOutputStream(name)) {
+            stream.write(bytes);
+            stream.flush();
+        }
         kafkaTemplate.send(topicName, name);
         return new File(name);
     }

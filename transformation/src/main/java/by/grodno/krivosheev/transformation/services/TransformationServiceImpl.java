@@ -18,6 +18,7 @@ import javax.xml.bind.JAXBException;
 import javax.xml.bind.Unmarshaller;
 
 import javax.xml.stream.XMLInputFactory;
+import javax.xml.stream.XMLStreamConstants;
 import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.XMLStreamReader;
 
@@ -53,6 +54,7 @@ public class TransformationServiceImpl implements TransformationService {
             JAXBContext jaxbContext = JAXBContext.newInstance(Item.class);
             Unmarshaller unmarshaller = jaxbContext.createUnmarshaller();
             XMLInputFactory xmlInputFactory = XMLInputFactory.newFactory();
+            xmlInputFactory.setProperty(XMLInputFactory.SUPPORT_DTD, false);
 
             log.debug(getMemory(runtime));
 
@@ -71,7 +73,7 @@ public class TransformationServiceImpl implements TransformationService {
                         arrayList.clear();
                     }
 
-                    if (xmlStreamReader.nextTag() != XMLStreamReader.START_ELEMENT) {
+                    if (xmlStreamReader.nextTag() != XMLStreamConstants.START_ELEMENT) {
                         break; // Miss not <item>
                     }
                     log.debug(getMemory(runtime));

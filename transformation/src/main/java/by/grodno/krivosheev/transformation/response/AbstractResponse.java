@@ -20,7 +20,7 @@ public abstract class AbstractResponse {
      * This constructor gets {@code value, reasonPhrase} of HttpStatus.
      * @param httpStatus enum {@link HttpStatus}.
      */
-    public AbstractResponse(HttpStatus httpStatus) {
+    protected AbstractResponse(HttpStatus httpStatus) {
         this.status = httpStatus.value();
         this.message = httpStatus.getReasonPhrase();
     }
