@@ -84,7 +84,7 @@ public class TransformationServiceImpl implements TransformationService {
                 }
             }
         } catch (IOException | XMLStreamException | JAXBException e) {
-            e.printStackTrace();
+            log.error(e.getMessage(), e);
         }
     }
 

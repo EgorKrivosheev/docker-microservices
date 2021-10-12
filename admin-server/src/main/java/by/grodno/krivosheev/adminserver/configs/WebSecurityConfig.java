@@ -19,12 +19,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        SavedRequestAwareAuthenticationSuccessHandler successHandler = new SavedRequestAwareAuthenticationSuccessHandler();
+        var successHandler = new SavedRequestAwareAuthenticationSuccessHandler();
         successHandler.setTargetUrlParameter("redirectTo");
         successHandler.setDefaultTargetUrl(this.adminServer.getContextPath() + "/");
 
-        http.csrf().disable()
-                .authorizeRequests()
+        http.authorizeRequests()
                     .antMatchers(this.adminServer.getContextPath() + "/assets/**").permitAll()
                     .antMatchers(this.adminServer.getContextPath() + "/login").permitAll()
                     .anyRequest().authenticated()
