@@ -6,19 +6,16 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Table;
 
 @Entity
 @Table(name = "ITEM")
 @Getter
 @Setter
 @NoArgsConstructor
-public class ItemEntity {
-    @Id
-    @Column(name = "id_item")
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id = 0L;
-
+public class ItemEntity extends AbstractEntity{
     @Column
     private String subject;
 

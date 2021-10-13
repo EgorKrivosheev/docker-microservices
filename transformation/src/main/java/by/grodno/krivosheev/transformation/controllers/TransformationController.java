@@ -1,9 +1,12 @@
 package by.grodno.krivosheev.transformation.controllers;
 
 import by.grodno.krivosheev.transformation.dto.BatchInfoDTO;
+import by.grodno.krivosheev.transformation.dto.UnifiedFormatDTO;
 
-import by.grodno.krivosheev.transformation.mappers.BatchMapper;
-import by.grodno.krivosheev.transformation.mappers.ItemMapper;
+import by.grodno.krivosheev.transformation.entities.BatchEntity;
+import by.grodno.krivosheev.transformation.entities.ItemEntity;
+
+import by.grodno.krivosheev.transformation.mappers.MapperAbstractFactory;
 
 import by.grodno.krivosheev.transformation.response.AbstractResponse;
 import by.grodno.krivosheev.transformation.response.ListBatchResponse;
@@ -43,8 +46,8 @@ import java.util.List;
 public class TransformationController {
     private final BatchService batchService;
     private final ItemService itemService;
-    private final BatchMapper batchMapper;
-    private final ItemMapper itemMapper;
+    private final MapperAbstractFactory<BatchInfoDTO, BatchEntity> batchMapperFactory;
+    private final MapperAbstractFactory<UnifiedFormatDTO, ItemEntity> itemMapperFactory;
 
     @Operation(summary = "Ingest endpoint")
     @PostMapping(produces = "application/octet-stream")
@@ -56,7 +59,7 @@ public class TransformationController {
 
         File uploadFile = batchService.save(file);
         long id = Long.parseLong(uploadFile.getName().substring(0, uploadFile.getName().length() - 4));
-        List<BatchInfoDTO> list = Collections.singletonList(batchMapper.batchEntityToBatchInfoDTO(batchService.getBatch(id)));
+        List<BatchInfoDTO> list = Collections.singletonList(batchMapperFactory.entityToDTO(batchService.getBatch(id)));
         return responseList(new ListBatchResponse(HttpStatus.OK, list), new HttpHeaders());
     }
 
@@ -64,14 +67,14 @@ public class TransformationController {
     @GetMapping(produces = "application/json")
     public ResponseEntity<ListBatchResponse> getBatches(@ParameterObject @PageableDefault(size = 25, sort = "uploadDate",
             direction = Sort.Direction.DESC) Pageable pageable) {
-        return responseList(new ListBatchResponse(HttpStatus.OK, batchMapper.listBatchEntityToListBatchInfoDTO(batchService.getAll(pageable))));
+        return responseList(new ListBatchResponse(HttpStatus.OK, batchMapperFactory.listEntityToListDTO(batchService.getAll(pageable))));
     }
 
     @Operation(summary = "Batch content with pagination (in the order from original file)")
     @GetMapping(value = "/{batchId}/items", produces = "application/json")
     public ResponseEntity<ListUnifiedResponse> getItemsBatch(@PathVariable Long batchId,
                                                              @ParameterObject @PageableDefault(size = 25) Pageable pageable) {
-        return responseList(new ListUnifiedResponse(HttpStatus.OK, itemMapper.listItemEntityToListUnifiedFormatDTO(itemService.findAllByIdBatch(batchId, pageable))));
+        return responseList(new ListUnifiedResponse(HttpStatus.OK, itemMapperFactory.listEntityToListDTO(itemService.findAllByIdBatch(batchId, pageable))));
     }
 
     private <T> ResponseEntity<T> responseList(T response) {

@@ -4,23 +4,24 @@ import by.grodno.krivosheev.transformation.dto.BatchInfoDTO;
 
 import by.grodno.krivosheev.transformation.entities.BatchEntity;
 
-import org.mapstruct.InjectionStrategy;
 import org.mapstruct.Mapper;
 
 import org.springframework.stereotype.Component;
 
 import java.util.List;
 
-@Mapper(componentModel = "spring", injectionStrategy = InjectionStrategy.CONSTRUCTOR)
 @Component
-public interface BatchMapper {
+@Mapper(config = MapperAbstractFactory.class)
+public interface BatchMapper extends MapperAbstractFactory<BatchInfoDTO, BatchEntity> {
 
     /**
      * This mapper gets {@code id}, {@code size}, {@code uploadDate} of the {@link BatchEntity}.
      * @param batchEntity it is info about Batch in database.
      * @return information about upload batch {@link BatchInfoDTO}.
      */
-    BatchInfoDTO batchEntityToBatchInfoDTO(BatchEntity batchEntity);
+    @Override
+    BatchInfoDTO entityToDTO(BatchEntity batchEntity);
 
-    List<BatchInfoDTO> listBatchEntityToListBatchInfoDTO(List<BatchEntity> batchEntities);
+    @Override
+    List<BatchInfoDTO> listEntityToListDTO(List<BatchEntity> listEntity);
 }

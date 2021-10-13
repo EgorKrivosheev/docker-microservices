@@ -1,7 +1,12 @@
 package by.grodno.krivosheev.transformation.controllers;
 
-import by.grodno.krivosheev.transformation.mappers.BatchMapper;
-import by.grodno.krivosheev.transformation.mappers.ItemMapper;
+import by.grodno.krivosheev.transformation.dto.BatchInfoDTO;
+import by.grodno.krivosheev.transformation.dto.UnifiedFormatDTO;
+
+import by.grodno.krivosheev.transformation.entities.BatchEntity;
+import by.grodno.krivosheev.transformation.entities.ItemEntity;
+
+import by.grodno.krivosheev.transformation.mappers.MapperAbstractFactory;
 
 import by.grodno.krivosheev.transformation.services.BatchService;
 import by.grodno.krivosheev.transformation.services.ItemService;
@@ -16,6 +21,7 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 
 import org.springframework.http.MediaType;
+
 import org.springframework.security.test.context.support.WithMockUser;
 
 import org.springframework.test.web.servlet.MockMvc;
@@ -27,7 +33,9 @@ import java.io.File;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.multipart;
+
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -54,10 +62,10 @@ class TransformationControllerTest {
     private ItemService itemService;
 
     @MockBean
-    private BatchMapper batchMapper;
+    private MapperAbstractFactory<BatchInfoDTO, BatchEntity> batchMapperFactory;
 
     @MockBean
-    private ItemMapper itemMapper;
+    private MapperAbstractFactory<UnifiedFormatDTO, ItemEntity> itemMapperFactory;
 
     @Test
     @WithMockUser(username = USERNAME_AUTH, password = PASSWORD_AUTH, roles = ROLES_AUTH)

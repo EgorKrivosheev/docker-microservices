@@ -1,7 +1,6 @@
 package by.grodno.krivosheev.transformation.dto;
 
 import lombok.Getter;
-import lombok.RequiredArgsConstructor;
 
 /**
  * This class contains information about upload batch. <p>
@@ -12,9 +11,13 @@ import lombok.RequiredArgsConstructor;
  *  - uploadDate = date upload file.
  */
 @Getter
-@RequiredArgsConstructor
-public class BatchInfoDTO {
-    private final Long id;
+public class BatchInfoDTO extends AbstractDTO {
     private final long size;
     private final String uploadDate;
+
+    public BatchInfoDTO(Long id, long size, String uploadDate) {
+        super(id);
+        this.size = size;
+        this.uploadDate = uploadDate;
+    }
 }

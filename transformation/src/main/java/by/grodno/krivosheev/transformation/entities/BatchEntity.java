@@ -4,19 +4,16 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Table;
 
 @Entity
 @Table(name = "BATCH")
 @Getter
 @Setter
 @NoArgsConstructor
-public class BatchEntity {
-    @Id
-    @Column(name = "id_batch")
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id = 0L;
-
+public class BatchEntity extends AbstractEntity {
     @Column(nullable = false)
     private long size;
 
