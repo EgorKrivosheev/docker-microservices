@@ -11,10 +11,7 @@ import org.springframework.data.mapping.PropertyReferenceException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
-import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseStatus;
-import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 import org.springframework.web.multipart.MaxUploadSizeExceededException;
 
@@ -34,7 +31,7 @@ public class ExceptionHandlerController {
      */
     @ExceptionHandler({IllegalArgumentException.class, MaxUploadSizeExceededException.class, PropertyReferenceException.class, MethodArgumentTypeMismatchException.class})
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    @RequestMapping(produces = "application/json")
+    @PostMapping(produces = "application/json")
     public ResponseEntity<ErrorResponse> handleBadRequest(Object e) {
         var msg = "Parameters are invalid...";
 
@@ -45,7 +42,7 @@ public class ExceptionHandlerController {
         } else if (e instanceof PropertyReferenceException) {
             msg = ((PropertyReferenceException) e).getMessage();
         }
-        log.warn(e + msg);
+        log.warn(msg, (Exception) e);
         return new ResponseEntity<>(new ErrorResponse(HttpStatus.BAD_REQUEST, msg), HttpStatus.BAD_REQUEST);
     }
 
@@ -56,9 +53,9 @@ public class ExceptionHandlerController {
      */
     @ExceptionHandler(Exception.class)
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-    @RequestMapping(produces = "application/json")
+    @PostMapping(produces = "application/json")
     public ResponseEntity<ErrorResponse> handleInternal(Exception e) {
-        log.error(e + e.getMessage());
+        log.error(e.getMessage(), e);
         return new ResponseEntity<>(new ErrorResponse(HttpStatus.INTERNAL_SERVER_ERROR), HttpStatus.INTERNAL_SERVER_ERROR);
     }
 }
