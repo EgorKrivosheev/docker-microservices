@@ -36,7 +36,7 @@ public class ExceptionHandlerController {
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @RequestMapping(produces = "application/json")
     public ResponseEntity<ErrorResponse> handleBadRequest(Object e) {
-        String msg = "Parameters are invalid...";
+        var msg = "Parameters are invalid...";
 
         if (e instanceof MaxUploadSizeExceededException) {
             msg = "Maximum upload size " + maxFileSize + "!";

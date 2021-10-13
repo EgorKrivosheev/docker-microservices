@@ -30,7 +30,7 @@ public class KafkaConfig {
 
     @Bean(name = "listenerTaskExecutor")
     public ThreadPoolTaskExecutor listenerTaskExecutor() {
-        ThreadPoolTaskExecutor poolTaskExecutor = new ThreadPoolTaskExecutor();
+        var poolTaskExecutor = new ThreadPoolTaskExecutor();
         poolTaskExecutor.setThreadNamePrefix("Listener-");
         poolTaskExecutor.setCorePoolSize(poolConnection / 2);
         poolTaskExecutor.setMaxPoolSize(poolConnection);

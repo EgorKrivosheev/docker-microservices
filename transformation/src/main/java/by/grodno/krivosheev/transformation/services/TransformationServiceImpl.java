@@ -1,30 +1,20 @@
 package by.grodno.krivosheev.transformation.services;
 
 import by.grodno.krivosheev.transformation.entities.ItemEntity;
-
 import by.grodno.krivosheev.transformation.pojo.Item;
-
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-
 import org.springframework.beans.factory.annotation.Value;
-
 import org.springframework.scheduling.annotation.Async;
-
 import org.springframework.stereotype.Service;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
-import javax.xml.bind.Unmarshaller;
-
 import javax.xml.stream.XMLInputFactory;
 import javax.xml.stream.XMLStreamConstants;
 import javax.xml.stream.XMLStreamException;
-import javax.xml.stream.XMLStreamReader;
-
 import java.io.File;
 import java.io.IOException;
-
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.List;
@@ -43,24 +33,24 @@ public class TransformationServiceImpl implements TransformationService {
     @Override
     @Async("listenerTaskExecutor")
     public void transformation(File file) throws IOException {
-        Runtime runtime = Runtime.getRuntime();
+        var runtime = Runtime.getRuntime();
         log.debug(getMemory(runtime));
         // unchecked because file's name NUMBER.zip (see BatchService#save)
-        long idBatch = Long.parseLong(file.getName().substring(0, file.getName().length() - 4));
+        var idBatch = Long.parseLong(file.getName().substring(0, file.getName().length() - 4));
         List<ItemEntity> arrayList = new ArrayList<>(size);
 
-        try(ZipFile zip = new ZipFile(file)) {
+        try(var zip = new ZipFile(file)) {
             Enumeration<? extends ZipEntry> entries = zip.entries();
-            JAXBContext jaxbContext = JAXBContext.newInstance(Item.class);
-            Unmarshaller unmarshaller = jaxbContext.createUnmarshaller();
-            XMLInputFactory xmlInputFactory = XMLInputFactory.newFactory();
+            var jaxbContext = JAXBContext.newInstance(Item.class);
+            var unmarshaller = jaxbContext.createUnmarshaller();
+            var xmlInputFactory = XMLInputFactory.newFactory();
             xmlInputFactory.setProperty(XMLInputFactory.SUPPORT_DTD, false);
 
             log.debug(getMemory(runtime));
 
             while (entries.hasMoreElements()) {
                 ZipEntry entry = entries.nextElement();
-                XMLStreamReader xmlStreamReader = xmlInputFactory.createXMLStreamReader(zip.getInputStream(entry));
+                var xmlStreamReader = xmlInputFactory.createXMLStreamReader(zip.getInputStream(entry));
                 // Miss <items>
                 xmlStreamReader.nextTag();
                 xmlStreamReader.nextTag();

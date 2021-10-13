@@ -27,9 +27,9 @@ public class BatchServiceImpl implements BatchService {
 
     @Override
     public File save(MultipartFile file) throws IOException {
-        BatchEntity batchEntity = batchRepository.save(new BatchEntity());
-        String name = batchEntity.getId() + ".zip";
-        File uploadFile = fileService.uploadAndSendKafka(file, name);
+        var batchEntity = batchRepository.save(new BatchEntity());
+        var name = batchEntity.getId() + ".zip";
+        var uploadFile = fileService.uploadAndSendKafka(file, name);
         batchEntity.setSize(Files.size(uploadFile.toPath()));
         batchEntity.setUploadDate(Files.getLastModifiedTime(uploadFile.toPath()).toString());
         batchRepository.save(batchEntity);

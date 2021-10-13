@@ -24,7 +24,7 @@ public class FileServiceImpl implements FileService {
     @Override
     public File uploadAndSendKafka(MultipartFile file, String name) throws IOException {
         byte[] bytes = file.getBytes();
-        try(FileOutputStream stream = new FileOutputStream(name)) {
+        try(var stream = new FileOutputStream(name)) {
             stream.write(bytes);
             stream.flush();
         }

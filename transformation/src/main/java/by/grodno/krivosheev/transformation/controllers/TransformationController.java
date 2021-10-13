@@ -9,6 +9,7 @@ import by.grodno.krivosheev.transformation.entities.ItemEntity;
 import by.grodno.krivosheev.transformation.mappers.MapperAbstractFactory;
 
 import by.grodno.krivosheev.transformation.response.AbstractResponse;
+import by.grodno.krivosheev.transformation.response.BatchResponse;
 import by.grodno.krivosheev.transformation.response.ListBatchResponse;
 import by.grodno.krivosheev.transformation.response.ListUnifiedResponse;
 
@@ -33,11 +34,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.File;
 import java.io.IOException;
-
-import java.util.Collections;
-import java.util.List;
 
 @Tag(name = "Transformation", description = "The rest service which consumes the data and just transforms it to a unified format")
 @RestController
@@ -57,10 +54,9 @@ public class TransformationController {
             throw new IllegalArgumentException("Don't upload file because he is empty!");
         }
 
-        File uploadFile = batchService.save(file);
-        long id = Long.parseLong(uploadFile.getName().substring(0, uploadFile.getName().length() - 4));
-        List<BatchInfoDTO> list = Collections.singletonList(batchMapperFactory.entityToDTO(batchService.getBatch(id)));
-        return responseList(new ListBatchResponse(HttpStatus.OK, list), new HttpHeaders());
+        var uploadFile = batchService.save(file);
+        var id = Long.parseLong(uploadFile.getName().substring(0, uploadFile.getName().length() - 4));
+        return responseWithHeader(new BatchResponse(HttpStatus.OK, batchMapperFactory.entityToDTO(batchService.getBatch(id))), new HttpHeaders());
     }
 
     @Operation(summary = "List of all uploads (ordered by date)")
@@ -81,7 +77,7 @@ public class TransformationController {
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
-    private ResponseEntity<AbstractResponse> responseList(AbstractResponse response, HttpHeaders headers) {
+    private ResponseEntity<AbstractResponse> responseWithHeader(AbstractResponse response, HttpHeaders headers) {
         headers.add("Content-Type", "application/json");
         return new ResponseEntity<>(response, headers, HttpStatus.OK);
     }
