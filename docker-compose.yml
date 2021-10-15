@@ -12,8 +12,6 @@ services:
     environment:
       ZOOKEEPER_CLIENT_PORT: 2181
       ZOOKEEPER_TICK_TIME: 2000
-    ports:
-      - "2181:2181"
   
   kafka:
     container_name: kafka
@@ -50,6 +48,14 @@ services:
       PORT: 8000
       EUREKA-SERVER: http://eureka-server:8761/eureka
 
+  elasticsearch-server:
+    container_name: elasticsearch-server
+    image: elasticsearch:7.12.1
+    ports:
+      - "9200:9200"
+    environment:
+      discovery.type: single-node
+
   transformation:
     container_name: transformation
     image: transformation:latest
@@ -58,10 +64,12 @@ services:
       - kafka
       - eureka-server
       - admin-server
+      - elasticsearch-server
     ports:
       - "8025:8025"
     environment:
       PORT: 8025
       KAFKA-SERVER: kafka:9092
       EUREKA-SERVER: http://eureka-server:8761/eureka
+      ELASTICSEARCH-SERVER: elasticsearch-server:9200
       spring.datasource.hikari.maximum-pool-size: 10

@@ -25,11 +25,13 @@ public class OpenApiConfig {
     @Bean
     public OpenAPI customOpenApi() {
         return new OpenAPI().info(
-                new Info().title(title)
+                new Info()
+                        .title(title)
                         .description(description)
                         .version(version)
                         .license(
-                                new License().name("Apache 2.0")
+                                new License()
+                                        .name("Apache 2.0")
                                         .url("https://springdoc.org")
                         )
         );

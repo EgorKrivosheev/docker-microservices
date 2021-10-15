@@ -1,20 +1,28 @@
 package by.grodno.krivosheev.transformation.services;
 
 import by.grodno.krivosheev.transformation.entities.ItemEntity;
+
 import by.grodno.krivosheev.transformation.pojo.Item;
+
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+
 import org.springframework.beans.factory.annotation.Value;
+
 import org.springframework.scheduling.annotation.Async;
+
 import org.springframework.stereotype.Service;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
+
 import javax.xml.stream.XMLInputFactory;
 import javax.xml.stream.XMLStreamConstants;
 import javax.xml.stream.XMLStreamException;
+
 import java.io.File;
 import java.io.IOException;
+
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.List;
@@ -59,7 +67,7 @@ public class TransformationServiceImpl implements TransformationService {
                     arrayList.add(new ItemEntity((Item) unmarshaller.unmarshal(xmlStreamReader), idBatch));
 
                     if (arrayList.size() == size) {
-                        itemService.saveAll(arrayList);
+                        itemService.saveAllAndPushElasticsearch(arrayList);
                         arrayList.clear();
                     }
 
@@ -69,7 +77,7 @@ public class TransformationServiceImpl implements TransformationService {
                     log.debug(getMemory(runtime));
                 }
                 if (!arrayList.isEmpty()) {
-                    itemService.saveAll(arrayList);
+                    itemService.saveAllAndPushElasticsearch(arrayList);
                     arrayList.clear();
                 }
             }

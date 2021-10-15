@@ -15,7 +15,7 @@ public interface ItemService {
      * Save all item of the list to database.
      * @param list items (see {@link ItemEntity})
      */
-    void saveAll(List<ItemEntity> list);
+    void saveAllAndPushElasticsearch(List<ItemEntity> list);
 
     /**
      * Find all items to idBatch and return paging and/or sorting list.

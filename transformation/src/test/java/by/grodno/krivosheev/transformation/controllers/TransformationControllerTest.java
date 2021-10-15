@@ -3,6 +3,7 @@ package by.grodno.krivosheev.transformation.controllers;
 import by.grodno.krivosheev.transformation.dto.BatchInfoDTO;
 import by.grodno.krivosheev.transformation.dto.UnifiedFormatDTO;
 
+import by.grodno.krivosheev.transformation.elastic.services.ItemDocumentService;
 import by.grodno.krivosheev.transformation.entities.BatchEntity;
 import by.grodno.krivosheev.transformation.entities.ItemEntity;
 
@@ -60,6 +61,9 @@ class TransformationControllerTest {
 
     @MockBean
     private ItemService itemService;
+
+    @MockBean
+    private ItemDocumentService itemDocumentService;
 
     @MockBean
     private MapperAbstractFactory<BatchInfoDTO, BatchEntity> batchMapperFactory;

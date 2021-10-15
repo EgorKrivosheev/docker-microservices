@@ -1,8 +1,12 @@
 package by.grodno.krivosheev.transformation.services;
 
+import by.grodno.krivosheev.transformation.elastic.services.ItemDocumentService;
+
 import by.grodno.krivosheev.transformation.entities.ItemEntity;
 
 import by.grodno.krivosheev.transformation.repositories.ItemRepository;
+
+import com.google.common.collect.Lists;
 
 import lombok.RequiredArgsConstructor;
 
@@ -16,10 +20,11 @@ import java.util.List;
 @RequiredArgsConstructor
 public class ItemServiceImpl implements ItemService {
     private final ItemRepository itemRepository;
+    private final ItemDocumentService itemDocumentService;
 
     @Override
-    public void saveAll(List<ItemEntity> list) {
-        itemRepository.saveAll(list);
+    public void saveAllAndPushElasticsearch(List<ItemEntity> list) {
+        itemDocumentService.createItemsDocumentList(Lists.newArrayList(itemRepository.saveAll(list)));
     }
 
     @Override
