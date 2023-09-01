@@ -5,9 +5,8 @@ import lombok.RequiredArgsConstructor;
 
 /**
  * This class abstract DTO. <p>
- *
  * Where: <p>
- *  - id = unique identification.
+ * - id = unique identification.
  */
 @Getter
 @RequiredArgsConstructor

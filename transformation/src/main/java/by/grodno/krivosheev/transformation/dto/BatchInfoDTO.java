@@ -4,11 +4,10 @@ import lombok.Getter;
 
 /**
  * This class contains information about upload batch. <p>
- *
  * Information: <p>
- *  - id = number by which you can get his items; <p>
- *  - size = size file in byte; <p>
- *  - uploadDate = date upload file.
+ * - id = number by which you can get his items; <p>
+ * - size = size file in byte; <p>
+ * - uploadDate = date upload file.
  */
 @Getter
 public class BatchInfoDTO extends AbstractDTO {

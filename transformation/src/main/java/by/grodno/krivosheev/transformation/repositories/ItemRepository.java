@@ -1,9 +1,7 @@
 package by.grodno.krivosheev.transformation.repositories;
 
 import by.grodno.krivosheev.transformation.entities.ItemEntity;
-
 import org.springframework.data.domain.Pageable;
-
 import org.springframework.data.repository.PagingAndSortingRepository;
 
 import java.util.List;
@@ -15,7 +13,8 @@ public interface ItemRepository extends PagingAndSortingRepository<ItemEntity, L
 
     /**
      * Find all items to idBatch and return paging and/or sorting list.
-     * @param idBatch number upload Batch;
+     *
+     * @param idBatch  number upload Batch;
      * @param pageable page, size and sort (see {@link Pageable}).
      * @return list found item which paging and/or sorted.
      */

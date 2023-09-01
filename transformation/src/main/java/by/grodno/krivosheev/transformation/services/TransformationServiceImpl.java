@@ -1,28 +1,20 @@
 package by.grodno.krivosheev.transformation.services;
 
 import by.grodno.krivosheev.transformation.entities.ItemEntity;
-
 import by.grodno.krivosheev.transformation.pojo.Item;
-
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-
 import org.springframework.beans.factory.annotation.Value;
-
 import org.springframework.scheduling.annotation.Async;
-
 import org.springframework.stereotype.Service;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
-
 import javax.xml.stream.XMLInputFactory;
 import javax.xml.stream.XMLStreamConstants;
 import javax.xml.stream.XMLStreamException;
-
 import java.io.File;
 import java.io.IOException;
-
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.List;
@@ -33,10 +25,12 @@ import java.util.zip.ZipFile;
 @Slf4j
 @RequiredArgsConstructor
 public class TransformationServiceImpl implements TransformationService {
-    @Value("${size-batch-save-database:100}")
-    private int size;
+    private static final int MB = 1048576;
 
     private final ItemService itemService;
+
+    @Value("${size-batch-save-database:100}")
+    private int size;
 
     @Override
     @Async("listenerTaskExecutor")
@@ -47,7 +41,7 @@ public class TransformationServiceImpl implements TransformationService {
         var idBatch = Long.parseLong(file.getName().substring(0, file.getName().length() - 4));
         List<ItemEntity> arrayList = new ArrayList<>(size);
 
-        try(var zip = new ZipFile(file)) {
+        try (var zip = new ZipFile(file)) {
             Enumeration<? extends ZipEntry> entries = zip.entries();
             var jaxbContext = JAXBContext.newInstance(Item.class);
             var unmarshaller = jaxbContext.createUnmarshaller();
@@ -87,7 +81,7 @@ public class TransformationServiceImpl implements TransformationService {
     }
 
     private String getMemory(Runtime runtime) {
-        return "Total: " + runtime.totalMemory() / (1024*1024) + " free: " + runtime.freeMemory() / (1024*1024) +
-                " used: " + (runtime.totalMemory() - runtime.freeMemory()) / (1024*1024);
+        return "Total: " + runtime.totalMemory() / MB + " free: " + runtime.freeMemory() / MB +
+                " used: " + (runtime.totalMemory() - runtime.freeMemory()) / MB;
     }
 }

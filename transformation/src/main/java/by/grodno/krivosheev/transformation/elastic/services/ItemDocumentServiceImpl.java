@@ -1,15 +1,10 @@
 package by.grodno.krivosheev.transformation.elastic.services;
 
 import by.grodno.krivosheev.transformation.elastic.pojo.ItemDocument;
-
 import by.grodno.krivosheev.transformation.elastic.repositories.ItemDocumentRepository;
-
 import by.grodno.krivosheev.transformation.entities.ItemEntity;
-
 import lombok.RequiredArgsConstructor;
-
 import org.springframework.data.domain.Pageable;
-
 import org.springframework.stereotype.Service;
 
 import java.util.List;

@@ -4,11 +4,10 @@ import lombok.Getter;
 
 /**
  * This class is unified format for item of the items in xml file. <p>
- *
  * Where: <p>
- *  - id = tag id item; <p>
- *  - subject = tag topic item; <p>
- *  - body = tag content item.
+ * - id = tag id item; <p>
+ * - subject = tag topic item; <p>
+ * - body = tag content item.
  */
 @Getter
 public class UnifiedFormatDTO extends AbstractDTO {

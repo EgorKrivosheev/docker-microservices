@@ -1,7 +1,6 @@
 package by.grodno.krivosheev.transformation.repositories;
 
 import by.grodno.krivosheev.transformation.entities.BatchEntity;
-
 import org.springframework.data.repository.PagingAndSortingRepository;
 
 /**
@@ -11,6 +10,7 @@ public interface BatchRepository extends PagingAndSortingRepository<BatchEntity,
 
     /**
      * Get info about {@link BatchEntity} to id.
+     *
      * @param id number batch.
      * @return info about batch.
      */

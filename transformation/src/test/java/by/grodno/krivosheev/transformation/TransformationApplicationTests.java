@@ -2,14 +2,11 @@ package by.grodno.krivosheev.transformation;
 
 import by.grodno.krivosheev.transformation.controllers.ExceptionHandlerController;
 import by.grodno.krivosheev.transformation.controllers.TransformationController;
-
 import org.junit.jupiter.api.Test;
-
 import org.springframework.beans.factory.annotation.Autowired;
-
 import org.springframework.boot.test.context.SpringBootTest;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 @SpringBootTest
 class TransformationApplicationTests {
@@ -21,7 +18,7 @@ class TransformationApplicationTests {
 
     @Test
     void contextLoads() {
-        assertThat(transformationController).isNotNull();
-        assertThat(exceptionHandlerController).isNotNull();
+        assertNotNull(transformationController);
+        assertNotNull(exceptionHandlerController);
     }
 }

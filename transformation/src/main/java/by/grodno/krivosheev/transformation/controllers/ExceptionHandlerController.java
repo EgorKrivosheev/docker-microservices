@@ -1,17 +1,15 @@
 package by.grodno.krivosheev.transformation.controllers;
 
 import by.grodno.krivosheev.transformation.response.ErrorResponse;
-
 import lombok.extern.slf4j.Slf4j;
-
 import org.springframework.beans.factory.annotation.Value;
-
 import org.springframework.data.mapping.PropertyReferenceException;
-
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 import org.springframework.web.multipart.MaxUploadSizeExceededException;
 
@@ -23,9 +21,10 @@ public class ExceptionHandlerController {
 
     /**
      * This exception handler catches: <p>
-     *  - IllegalArgumentException if request has invalid param; <p>
-     *  - MaxUploadSizeExceededException if request has file more that maxFileSize; <p>
-     *  - PropertyReferenceException if request has invalid param SORT.
+     * - IllegalArgumentException if request has invalid param; <p>
+     * - MaxUploadSizeExceededException if request has file more that maxFileSize; <p>
+     * - PropertyReferenceException if request has invalid param SORT.
+     *
      * @param e object catches exception.
      * @return custom {@link ErrorResponse} with code 400 and message about bad request.
      */
@@ -48,6 +47,7 @@ public class ExceptionHandlerController {
 
     /**
      * This exception handler catches all exceptions for which there are no handlers.
+     *
      * @param e catches exception.
      * @return custom {@link ErrorResponse} with code 500 and default message.
      */

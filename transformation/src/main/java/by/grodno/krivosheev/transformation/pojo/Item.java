@@ -8,11 +8,10 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  * This class is help get item of the items in xml file for {@link javax.xml.bind.JAXBContext}. <p>
- *
  * Where: <p>
- *  - id = tag id item; <p>
- *  - topic = tag topic item; <p>
- *  - content = tag content item.
+ * - id = tag id item; <p>
+ * - topic = tag topic item; <p>
+ * - content = tag content item.
  */
 @XmlRootElement
 @Getter

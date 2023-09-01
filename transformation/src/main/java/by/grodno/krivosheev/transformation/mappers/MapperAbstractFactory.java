@@ -1,9 +1,7 @@
 package by.grodno.krivosheev.transformation.mappers;
 
 import by.grodno.krivosheev.transformation.dto.AbstractDTO;
-
 import by.grodno.krivosheev.transformation.entities.AbstractEntity;
-
 import org.mapstruct.InjectionStrategy;
 import org.mapstruct.MapperConfig;
 

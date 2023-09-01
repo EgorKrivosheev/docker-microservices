@@ -1,42 +1,20 @@
 package by.grodno.krivosheev.transformation.controllers;
 
-import by.grodno.krivosheev.transformation.dto.BatchInfoDTO;
-import by.grodno.krivosheev.transformation.dto.UnifiedFormatDTO;
-
-import by.grodno.krivosheev.transformation.elastic.services.ItemDocumentService;
-import by.grodno.krivosheev.transformation.entities.BatchEntity;
-import by.grodno.krivosheev.transformation.entities.ItemEntity;
-
-import by.grodno.krivosheev.transformation.mappers.MapperAbstractFactory;
-
 import by.grodno.krivosheev.transformation.services.BatchService;
-import by.grodno.krivosheev.transformation.services.ItemService;
-
-import com.fasterxml.jackson.databind.ObjectMapper;
-
 import org.junit.jupiter.api.Test;
-
 import org.springframework.beans.factory.annotation.Autowired;
-
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-
-import org.springframework.http.MediaType;
-
 import org.springframework.security.test.context.support.WithMockUser;
-
 import org.springframework.test.web.servlet.MockMvc;
-
-import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
-
+import static org.springframework.http.MediaType.APPLICATION_JSON;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.multipart;
-
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -53,32 +31,19 @@ class TransformationControllerTest {
     @Autowired
     private MockMvc mockMvc;
 
-    @Autowired
-    private ObjectMapper objectMapper;
-
     @MockBean
     private BatchService batchService;
-
-    @MockBean
-    private ItemService itemService;
-
-    @MockBean
-    private ItemDocumentService itemDocumentService;
-
-    @MockBean
-    private MapperAbstractFactory<BatchInfoDTO, BatchEntity> batchMapperFactory;
-
-    @MockBean
-    private MapperAbstractFactory<UnifiedFormatDTO, ItemEntity> itemMapperFactory;
 
     @Test
     @WithMockUser(username = USERNAME_AUTH, password = PASSWORD_AUTH, roles = ROLES_AUTH)
     void uploadBatch_isOk() throws Exception {
-        when(batchService.save(any(MultipartFile.class))).thenReturn(new File("0.zip"));
+        when(batchService.save(any()))
+                .thenReturn(new File("0.zip"));
+
         mockMvc.perform(multipart(BATCHES_URL)
                         .file(UPLOAD_FILE_PARAM, new byte[1]))
                 .andExpect(status().isOk())
-                .andExpect(content().contentType(MediaType.APPLICATION_JSON));
+                .andExpect(content().contentType(APPLICATION_JSON));
     }
 
     @Test
@@ -87,7 +52,7 @@ class TransformationControllerTest {
         mockMvc.perform(multipart(BATCHES_URL)
                         .file(UPLOAD_FILE_PARAM, new byte[0]))
                 .andExpect(status().isBadRequest())
-                .andExpect(content().contentType(MediaType.APPLICATION_JSON));
+                .andExpect(content().contentType(APPLICATION_JSON));
     }
 
     @Test
@@ -102,7 +67,7 @@ class TransformationControllerTest {
     void getBatches_isOk() throws Exception {
         mockMvc.perform(get(BATCHES_URL))
                 .andExpect(status().isOk())
-                .andExpect(content().contentType(MediaType.APPLICATION_JSON));
+                .andExpect(content().contentType(APPLICATION_JSON));
     }
 
     @Test
@@ -116,7 +81,7 @@ class TransformationControllerTest {
     void getItemsBatch_isOk() throws Exception {
         mockMvc.perform(get(BATCHES_URL + ITEMS_BATCH_URL))
                 .andExpect(status().isOk())
-                .andExpect(content().contentType(MediaType.APPLICATION_JSON));
+                .andExpect(content().contentType(APPLICATION_JSON));
     }
 
     @Test
@@ -124,7 +89,7 @@ class TransformationControllerTest {
     void getItemsBatch_isBadRequest() throws Exception {
         mockMvc.perform(get(BATCHES_URL + "/text/items"))
                 .andExpect(status().isBadRequest())
-                .andExpect(content().contentType(MediaType.APPLICATION_JSON));
+                .andExpect(content().contentType(APPLICATION_JSON));
     }
 
     @Test

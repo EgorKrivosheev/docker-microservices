@@ -1,7 +1,6 @@
 package by.grodno.krivosheev.transformation.entities;
 
 import by.grodno.krivosheev.transformation.pojo.Item;
-
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -15,7 +14,7 @@ import javax.persistence.Table;
 @Getter
 @Setter
 @NoArgsConstructor
-public class ItemEntity extends AbstractEntity{
+public class ItemEntity extends AbstractEntity {
     @Column
     private String subject;
 

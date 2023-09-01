@@ -12,6 +12,7 @@ public interface FileService {
 
     /**
      * Upload the file under the name and send name in kafka.
+     *
      * @param file which need upload;
      * @param name file's name.
      * @return upload file.

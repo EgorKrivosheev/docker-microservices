@@ -1,5 +1,19 @@
 version: '3.8'
 services:
+  postgres:
+    image: postgres:latest
+    container_name: postgres-latest
+    restart: always
+    ports:
+      - "5435:5432"
+    environment:
+      POSTGRES_DB: transformation
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_HOST_AUTH_METHOD: trust
+  #    volumes:
+  #      - ./dev/data:/var/lib/postgresql/data
+
   sonar:
     container_name: sonar
     image: sonarqube:lts-community
@@ -36,7 +50,7 @@ services:
       - "8761:8761"
     environment:
       PORT: 8761
-
+# TODO: update admin-server
   admin-server:
     container_name: admin-server
     image: admin-server:latest
@@ -60,6 +74,7 @@ services:
     container_name: transformation
     image: transformation:latest
     depends_on:
+      - postgres
       - zookeeper
       - kafka
       - eureka-server
@@ -69,6 +84,11 @@ services:
       - "8025:8025"
     environment:
       PORT: 8025
+      DB_HOST: postgres
+      DB_PORT: 5432
+      DB_NAME: transformation
+      DB_USER: postgres
+      DB_PASSWORD: postgres
       KAFKA-SERVER: kafka:9092
       EUREKA-SERVER: http://eureka-server:8761/eureka
       ELASTICSEARCH-SERVER: elasticsearch-server:9200

@@ -11,7 +11,8 @@ import java.io.IOException;
 public interface TransformationService {
 
     /**
-     * Get items of xml file, transformation them in unified format and save in the database.
+     * Get items of xml file, transformation them in unified format and save it in the database.
+     *
      * @param file uploaded zip file.
      * @throws IOException if an I/O error occurs.
      */
